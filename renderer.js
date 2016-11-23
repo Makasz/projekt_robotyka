@@ -48,10 +48,8 @@ window.addEventListener('DOMContentLoaded', function(){
          v1 = v2;
          v2 = new BABYLON.Vector3(ending.absolutePosition.x,ending.absolutePosition.y,ending.absolutePosition.z);
          lines = BABYLON.Mesh.CreateLines("lines", [v1,v2], scene);
-         console.log(v1 + "   " +v2);
          cnt = 0;
        }
-       console.log(cnt = cnt + 1);
    });
    window.addEventListener('resize', function(){
        engine.resize();
