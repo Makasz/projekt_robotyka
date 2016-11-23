@@ -1,7 +1,7 @@
 window.addEventListener('DOMContentLoaded', function(){
    var canvas = document.getElementById('renderCanvas');
    var engine = new BABYLON.Engine(canvas, true);
-   var cone, sphere1, ground, cone1,chwytak, ending,lines,v1,v2;
+   var cone, sphere1, ground, cone1,chwytak, ending,lines,v1,v2,cnt=0;
    var createScene = function(){
        var scene = new BABYLON.Scene(engine);
        var camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5,-10), scene);
@@ -39,15 +39,19 @@ window.addEventListener('DOMContentLoaded', function(){
    var scene = createScene();
    engine.runRenderLoop(function(){
        scene.render();
-       v1 = v2
+
 
        sphere1.rotation.y += 0.01;
 
        sphere2.rotation.x = 1.5 + Math.sin(sphere1.rotation.y*5)/2;
-
-       v2 = new BABYLON.Vector3(ending.absolutePosition.x,ending.absolutePosition.y,ending.absolutePosition.z);
-       lines = BABYLON.Mesh.CreateLines("lines", [v1,v2], scene);
-       console.log(v1 + "   " +v2);
+       if(cnt == 10){
+         v1 = v2;
+         v2 = new BABYLON.Vector3(ending.absolutePosition.x,ending.absolutePosition.y,ending.absolutePosition.z);
+         lines = BABYLON.Mesh.CreateLines("lines", [v1,v2], scene);
+         console.log(v1 + "   " +v2);
+         cnt = 0;
+       }
+       console.log(cnt = cnt + 1);
    });
    window.addEventListener('resize', function(){
        engine.resize();

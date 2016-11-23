@@ -7,7 +7,16 @@ html, body {
 }
 
 #renderCanvas {
-    width   : 100%;
+    position: absolute;
+    width   : 50%;
     height  : 100%;
     touch-action: none;
+    right: 0;
+}
+#editor{
+  width: 50%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
