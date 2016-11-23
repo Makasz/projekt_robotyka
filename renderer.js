@@ -50,6 +50,7 @@ window.addEventListener('DOMContentLoaded', function(){
          lines = BABYLON.Mesh.CreateLines("lines", [v1,v2], scene);
          cnt = 0;
        }
+      cnt += 1;
    });
    window.addEventListener('resize', function(){
        engine.resize();
