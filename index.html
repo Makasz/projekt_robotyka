@@ -10,16 +10,17 @@
 <body>
     <canvas id="renderCanvas"></canvas>
 
-    <div id="editor">G28 ; ustaw ekstruder w pozycji zerowej
-    G1 Z20 F5000 ; podnies ekstruder o 20 mm
-    G1 X100 Y100 F15000 ; idz na srodek stolu (100:100) z predkoscia 15000 mm/min
-    M109 S190 ; ustaw temp. dyszy na 190 st. i czekaj az zostanie osiagnieta
-    G1 E-25 F100 ; wycofaj 25 mm filamentu z predkoscia 100 mm/min
-    M1 S60 ; poczekaj 60 sek
-    G1 E10 F50 ; wycisnij 25+10 mm filamentu
-    M1 S10 ; poczekaj 10 sek
-    G28 ; ustaw ekstruder w pozycji zerowej
-    }</div>
+    <div id="editor">
+    G1 Z2 X2 Y2 F500
+    G1 X5 Y5 F1000 
+    G1 X1 Y1 Z1 F800 
+    G1 Z3 F1000 
+    G420
+    </div>
+
+    <div id="console">
+        Console
+    </div>
 
     <script src="src/ace.js" type="text/javascript" charset="utf-8"></script>
     <script>
@@ -33,5 +34,6 @@
            enableLiveAutocompletion: false
        });
     </script>
+    <script src="parser.js" type="text/javascript" charset="utf-8"></script>
 </body>
 </html>

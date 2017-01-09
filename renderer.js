@@ -1,57 +1,112 @@
 window.addEventListener('DOMContentLoaded', function(){
    var canvas = document.getElementById('renderCanvas');
    var engine = new BABYLON.Engine(canvas, true);
-   var cone, sphere1, ground, cone1,chwytak, ending,lines,v1,v2,cnt=0;
+   var cone, sphere1, ground, cone1,chwytak, ending,lines,v1,v2,camera1,cnt=0,x_axis,y_axis,z_axis,start=1,instructionNumber=1, startPos, endPos, deltaPos, end=0;
    var createScene = function(){
        var scene = new BABYLON.Scene(engine);
-       var camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5,-10), scene);
-       camera.setTarget(BABYLON.Vector3.Zero());
-       camera.attachControl(canvas, false);
+       camera1 = new BABYLON.ArcRotateCamera("camera1", 1, 0.8, 10, new BABYLON.Vector3(0, 0, 0), scene);
+       camera1.setTarget(BABYLON.Vector3.Zero());
+       camera1.attachControl(canvas, false);
        var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0,1,0), scene);
-
-
-        cone = BABYLON.MeshBuilder.CreateCylinder("cone", {diameterTop: 0.4, tessellation: 40}, scene);
-       cone.position.y = 1;
-
-       sphere1 = BABYLON.MeshBuilder.CreateSphere("sphere1", {diameter: 0.5},scene);
-       sphere1.position.y = 2;
-       cone1 = BABYLON.MeshBuilder.CreateCylinder("cone1", {diameter: .4, tessellation: 40}, scene);
-       cone1.position.y = 1;
-       cone1.parent = sphere1;
-
-      sphere2 = BABYLON.MeshBuilder.CreateSphere("sphere2", {diameter: 0.5},scene);
-      sphere2.position.y = 1;
-      cone2 = BABYLON.MeshBuilder.CreateCylinder("cone2", {diameterTop: 0, diameterBottom: 0.4, tessellation: 40}, scene);
-      cone2.position.y = 1;
-      cone2.parent = sphere2;
-
+       
       ending = BABYLON.MeshBuilder.CreateSphere("sphere3", {diameter: 0.1},scene);
-      ending.position.y = 2;
-      ending.parent = sphere2;
-      sphere1.rotation.x = 1;
-      sphere2.parent = cone1;
-      sphere2.rotation.x = 1.5;
       v2 = new BABYLON.Vector3(ending.absolutePosition.x,ending.absolutePosition.y,ending.absolutePosition.z);
-      //ground = BABYLON.Mesh.CreateGround('ground1', 6, 6, 2, scene);
-       return scene;
+
+      x_axis = BABYLON.Mesh.CreateLines("x_axis", [new BABYLON.Vector3(0,0,0), new BABYLON.Vector3(10,0,0)], scene);
+      y_axis = BABYLON.Mesh.CreateLines("y_axis", [new BABYLON.Vector3(0,0,0), new BABYLON.Vector3(0,10,0)], scene);
+      z_axis = BABYLON.Mesh.CreateLines("z_axis", [new BABYLON.Vector3(0,0,0), new BABYLON.Vector3(0,0,10)], scene);
+
+      return scene;
    }
 
    var scene = createScene();
    engine.runRenderLoop(function(){
        scene.render();
 
+       if(commandType[instructionNumber].name == "G420") {
+           
+       }
 
-       sphere1.rotation.y += 0.01;
+       if(commandType[instructionNumber].name == "G1") {
+           
+           if(start == 1) {
+                if(commandType[instructionNumber].x == "0") commandType[instructionNumber].x = Math.round(100*ending.position.x)/100;
+                if(commandType[instructionNumber].y == "0") commandType[instructionNumber].y = Math.round(100*ending.position.y)/100;
+                if(commandType[instructionNumber].z == "0") commandType[instructionNumber].z = Math.round(100*ending.position.z)/100;
+                console.log(commandType[instructionNumber]);
+                startPos = ending.position;
+                endPos = new BABYLON.Vector3(commandType[instructionNumber].x, commandType[instructionNumber].y, commandType[instructionNumber].z);
+                deltaPos = new BABYLON.Vector3(endPos.x - startPos.x, endPos.y - startPos.y, endPos.z - startPos.z);           
+               start=0;
+           }
 
-       sphere2.rotation.x = 1.5 + Math.sin(sphere1.rotation.y*5)/2;
-       if(cnt == 10){
+           if(deltaPos.x > 0 && ending.position.x < endPos.x) {
+               ending.position.x += 0.01 * commandType[instructionNumber].f/1000;
+               //console.log(ending.position.x);
+           }
+           if(deltaPos.y > 0 && ending.position.y < endPos.y) {
+               ending.position.y += 0.01 * commandType[instructionNumber].f/1000;
+               //console.log(ending.position.y);
+           }
+           if(ending.position.z < endPos.z) {
+               ending.position.z += 0.01 * commandType[instructionNumber].f/1000;
+               //console.log(ending.position.z);
+           }
+
+           if(deltaPos.x < 0 && ending.position.x > endPos.x) {
+               ending.position.x -= 0.01 * commandType[instructionNumber].f/1000;
+               //console.log(ending.position.x);
+           }
+           if(deltaPos.y < 0 && ending.position.y > endPos.y) {
+               ending.position.y -= 0.01 * commandType[instructionNumber].f/1000;
+               //console.log(ending.position.y);
+           }
+           if(ending.position.z > endPos.z) {
+               ending.position.z -= 0.01 * commandType[instructionNumber].f/1000;
+               //console.log(ending.position.z);
+           }
+
+           document.getElementById("console").innerHTML = 
+           "X:" + ending.position.x + "<br>" +
+           "Y:" + ending.position.y + "<br>" +
+           "Z:" + ending.position.z + "<br>" +
+           "Speed:" + commandType[instructionNumber].f + "<br>" + 
+           "Line:" + instructionNumber + "<br>";
+
+           if(deltaPos.x > 0 && deltaPos.y > 0 && deltaPos.z > 0 && ending.position.x >= endPos.x && ending.position.y >= endPos.y && Math.round(ending.position.z*100)/100 >= endPos.z) {      
+               start = 1;
+               startPos = new BABYLON.Vector3.Zero;
+               endPos = startPos;
+               deltaPos = endPos;
+               //ending.position = new BABYLON.Vector3(commandType[instructionNumber].x, commandType[instructionNumber].y, commandType[instructionNumber].z);
+               instructionNumber++;
+               console.log(ending.position);
+               console.log(instructionNumber);
+           }
+           if(deltaPos.x < 0 && deltaPos.y < 0 && deltaPos.z < 0 && ending.position.x <= endPos.x && ending.position.y <= endPos.y && Math.round(ending.position.z*100)/100 <= endPos.z) {      
+               start = 1;
+               startPos = new BABYLON.Vector3.Zero;
+               endPos = startPos;
+               deltaPos = endPos;
+               //ending.position = new BABYLON.Vector3(commandType[instructionNumber].x, commandType[instructionNumber].y, commandType[instructionNumber].z);
+               instructionNumber++;
+               console.log(ending.position);
+               console.log(instructionNumber);
+           }
+
+       }
+       camera1.setTarget(ending.position);
+
+       //if(ending.position.z < 2) ending.position.z = ending.position.z + 0.01;
+       //console.log(ending.position.z );
+
+       if(cnt == 10){ //rysowanie linii za końcówką
          v1 = v2;
          v2 = new BABYLON.Vector3(ending.absolutePosition.x,ending.absolutePosition.y,ending.absolutePosition.z);
          lines = BABYLON.Mesh.CreateLines("lines", [v1,v2], scene);
-         console.log(v1 + "   " +v2);
-         cnt = 0;
+         cnt = 0;      
        }
-       console.log(cnt = cnt + 1);
+       cnt++;
    });
    window.addEventListener('resize', function(){
        engine.resize();
