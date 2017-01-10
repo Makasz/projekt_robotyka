@@ -173,8 +173,8 @@ window.addEventListener('DOMContentLoaded', function(){
            if(1){   
                ending.position.x = parseFloat(circle.centerX) + parseFloat(circle.radius) * Math.cos(angle);
                ending.position.y = parseFloat(circle.centerY) + parseFloat(circle.radius) * Math.sin(angle);
-               if(commandType[instructionNumber].name == "G2") angle += 0.01;
-               if(commandType[instructionNumber].name == "G3") angle -= 0.01;
+               if(commandType[instructionNumber].name == "G2") angle += 0.01* commandType[instructionNumber].f/1000;
+               if(commandType[instructionNumber].name == "G3") angle -= 0.01* commandType[instructionNumber].f/1000;
            }
            if(Math.round(ending.position.y*10)/10 == endPos.y && Math.round(ending.position.x*10)/10 == endPos.x) {
                console.log(circle);
