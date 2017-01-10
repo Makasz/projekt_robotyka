@@ -16,6 +16,10 @@ window.addEventListener('DOMContentLoaded', function(){
       x_axis = BABYLON.Mesh.CreateLines("x_axis", [new BABYLON.Vector3(0,0,0), new BABYLON.Vector3(1000,0,0)], scene);
       y_axis = BABYLON.Mesh.CreateLines("y_axis", [new BABYLON.Vector3(0,0,0), new BABYLON.Vector3(0,1000,0)], scene);
       z_axis = BABYLON.Mesh.CreateLines("z_axis", [new BABYLON.Vector3(0,0,0), new BABYLON.Vector3(0,0,1000)], scene);
+      
+            y_axis.color = new BABYLON.Color3(0,1,0);
+      x_axis.color = new BABYLON.Color3(1,0,0);
+      z_axis.color = new BABYLON.Color3(0,0,1);
 
       return scene;
    }
