@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', function(){
        var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0,1,0), scene);
        
       ending = BABYLON.MeshBuilder.CreateSphere("sphere3", {diameter: 0.1},scene);
-      ending.position = new BABYLON.Vector3(3,3,3);
+      ending.position = new BABYLON.Vector3(0,0,0);
       v2 = ending.position;
 
       x_axis = BABYLON.Mesh.CreateLines("x_axis", [new BABYLON.Vector3(0,0,0), new BABYLON.Vector3(1000,0,0)], scene);
