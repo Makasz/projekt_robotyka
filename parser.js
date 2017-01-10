@@ -3,7 +3,28 @@ var commandType=[];
 var run=0;
 commandType[1] = {name: ""};
 
-editor.setValue(localStorage['editorText'] || "");
+editor.setValue(localStorage['editorText'] || "
+    G1 X3 Y3 Z3 F1500
+    G1 X3 Y6 Z3 F1500
+    G1 X3 Y6 Z3 F1500
+    G3 X6 Y6 I4.5 J3 F1000
+    G1 X6 Y3 Z3 F1500
+    G1 X6 Y3 Z6 F1500
+    G1 Y6 X6 Z6 F1500
+    G2 X3 Y6 I4.5 J3 F1000
+    G1 X3 Y3 Z6 F1500
+    G1 X3 Y3 Z3 F1500
+    G1 X6 Y3 Z3 F1500
+    G1 X9 Y3 Z3 F1500
+    G1 X9 Y6 Z3 F1500
+    G3 X12 Y6 I10.5 J4.5 F1500
+    G1 X12 Y3 Z3 F1500
+    G1 X12 Y3 Z6 F1500
+    G1 X12 Y6 Z6 F1500
+    G2 X9 Y6 I10.5 J4.5 F1500
+    G1 X9 Y3 Z6 F1500
+    G1 X9 Y3 Z3 F1500
+    G420");
 
 
 function sleep(ms) {
