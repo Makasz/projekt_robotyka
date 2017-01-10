@@ -3,6 +3,9 @@ var commandType=[];
 var run=0;
 commandType[1] = {name: ""};
 
+editor.setValue(localStorage['editorText'] || "");
+
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -45,6 +48,7 @@ function getCommandType(element, index, array) {
 
 function parse(){
        var editorRawText = editor.getValue(); //Pobiera wartość z edytora
+       localStorage['editorText'] = editorRawText;
         var editorLinesText = editorRawText.split('\n'); //Dzieli na linie do tablicy
        editorLinesText.forEach(getCommandType);
 }
