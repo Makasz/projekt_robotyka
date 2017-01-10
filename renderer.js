@@ -16,11 +16,10 @@ window.addEventListener('DOMContentLoaded', function(){
       x_axis = BABYLON.Mesh.CreateLines("x_axis", [new BABYLON.Vector3(0,0,0), new BABYLON.Vector3(1000,0,0)], scene);
       y_axis = BABYLON.Mesh.CreateLines("y_axis", [new BABYLON.Vector3(0,0,0), new BABYLON.Vector3(0,1000,0)], scene);
       z_axis = BABYLON.Mesh.CreateLines("z_axis", [new BABYLON.Vector3(0,0,0), new BABYLON.Vector3(0,0,1000)], scene);
-      
-            y_axis.color = new BABYLON.Color3(0,1,0);
+
+      y_axis.color = new BABYLON.Color3(0,1,0);
       x_axis.color = new BABYLON.Color3(1,0,0);
       z_axis.color = new BABYLON.Color3(0,0,1);
-
       return scene;
    }
 
@@ -40,11 +39,11 @@ window.addEventListener('DOMContentLoaded', function(){
 
        if(commandType[instructionNumber].name == "G1" || commandType[instructionNumber].name == "G0") {
            if(start == 1) {
-                if(commandType[instructionNumber].x == "0") commandType[instructionNumber].x = Math.round(100*ending.position.x)/100;
-                if(commandType[instructionNumber].y == "0") commandType[instructionNumber].y = Math.round(100*ending.position.y)/100;
-                if(commandType[instructionNumber].z == "0") commandType[instructionNumber].z = Math.round(100*ending.position.z)/100;
-                if(commandType[instructionNumber].f == "0") commandType[instructionNumber].f = 750;
-                if(commandType[instructionNumber].f == "0" && commandType[instructionNumber].name == "G0") commandType[instructionNumber].f = 1500;
+                if(commandType[instructionNumber].x == "") commandType[instructionNumber].x = Math.round(100*ending.position.x)/100;
+                if(commandType[instructionNumber].y == "") commandType[instructionNumber].y = Math.round(100*ending.position.y)/100;
+                if(commandType[instructionNumber].z == "") commandType[instructionNumber].z = Math.round(100*ending.position.z)/100;
+                if(commandType[instructionNumber].f == "") commandType[instructionNumber].f = 750;
+                if(commandType[instructionNumber].f == "" && commandType[instructionNumber].name == "G0") commandType[instructionNumber].f = 1500;
                 //console.log("Docelowe miejsce: ", commandType[instructionNumber]);
                 startPos = ending.position;
                 endPos = new BABYLON.Vector3(parseFloat(commandType[instructionNumber].x), parseFloat(commandType[instructionNumber].y), parseFloat(commandType[instructionNumber].z));
@@ -52,28 +51,28 @@ window.addEventListener('DOMContentLoaded', function(){
                start=0;
            }
 
-           if(ending.position.x < endPos.x) {
+           if(toRound(ending.position.x) < endPos.x) {
                ending.position.x += 0.01 * commandType[instructionNumber].f/1000 * Math.abs(deltaPos.x);
                //console.log(ending.position.x);
            }
-           if(ending.position.y < endPos.y) {
+           if(toRound(ending.position.y) < endPos.y) {
                ending.position.y += 0.01 * commandType[instructionNumber].f/1000 * Math.abs(deltaPos.y);
                //console.log(ending.position.y);
            }
-           if(ending.position.z < endPos.z) {
+           if(toRound(ending.position.z) < endPos.z) {
                ending.position.z += 0.01 * commandType[instructionNumber].f/1000 * Math.abs(deltaPos.z);
                //console.log(ending.position.z);
            }
 
-           if(ending.position.x > endPos.x) {
+           if(toRound(ending.position.x) > endPos.x) {
                ending.position.x -= 0.01 * commandType[instructionNumber].f/1000 * Math.abs(deltaPos.x);
                //console.log(ending.position.x);
            }
-           if(ending.position.y > endPos.y) {
+           if(toRound(ending.position.y) > endPos.y) {
                ending.position.y -= 0.01 * commandType[instructionNumber].f/1000 * Math.abs(deltaPos.y);
                //console.log(ending.position.y);
            }
-           if(ending.position.z > endPos.z) {
+           if(toRound(ending.position.z) > endPos.z) {
                ending.position.z -= 0.01 * commandType[instructionNumber].f/1000 * Math.abs(deltaPos.z);
                //console.log(ending.position.z);
            }
@@ -86,11 +85,12 @@ window.addEventListener('DOMContentLoaded', function(){
            "Line:" + instructionNumber + "<br>";
            //console.log("Delta", deltaPos);
            //console.log(Math.round(ending.position.x*10)/10, endPos.x, Math.round(ending.position.y*10)/10, endPos.y, Math.round(ending.position.z*10)/10, endPos.z)
+           //console.log(ending.position, endPos, commandType[instructionNumber]);
            if( Math.round(ending.position.x*10)/10 == toRound(endPos.x) && Math.round(ending.position.y*10)/10 == toRound(endPos.y) && Math.round(ending.position.z*10)/10 == toRound(endPos.z)) {      
                start = 1;
                endflag=1;
                startPos = new BABYLON.Vector3.Zero;
-               endPos = startPos;
+               endPos = new BABYLON.Vector3.Zero;
                deltaPos = endPos;
                //ending.position = new BABYLON.Vector3(commandType[instructionNumber].x, commandType[instructionNumber].y, commandType[instructionNumber].z);
                instructionNumber++;
