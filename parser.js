@@ -43,12 +43,15 @@ function getCommandType(element, index, array) {
 
 
 
-
-   function start_stop(){
+function parse(){
        var editorRawText = editor.getValue(); //Pobiera wartość z edytora
         var editorLinesText = editorRawText.split('\n'); //Dzieli na linie do tablicy
        editorLinesText.forEach(getCommandType);
+}
+
+   function start_stop(){
+
        if(run==0) run = 1;
        else run = 0;
-       console.log(run);
+       //console.log(run);
    }

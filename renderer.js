@@ -19,11 +19,15 @@ window.addEventListener('DOMContentLoaded', function(){
       return scene;
    }
 
-
+   
 
    var scene = createScene();
    engine.runRenderLoop(function(){
        scene.render();
+
+       function toRound(toround){
+           return Math.round(toround*1000)/1000;
+       }
 
        if(run==1){
 
@@ -37,7 +41,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 if(commandType[instructionNumber].z == "0") commandType[instructionNumber].z = Math.round(100*ending.position.z)/100;
                 if(commandType[instructionNumber].f == "0") commandType[instructionNumber].f = 750;
                 if(commandType[instructionNumber].f == "0" && commandType[instructionNumber].name == "G0") commandType[instructionNumber].f = 1500;
-                console.log("Docelowe miejsce: ", commandType[instructionNumber]);
+                //console.log("Docelowe miejsce: ", commandType[instructionNumber]);
                 startPos = ending.position;
                 endPos = new BABYLON.Vector3(parseFloat(commandType[instructionNumber].x), parseFloat(commandType[instructionNumber].y), parseFloat(commandType[instructionNumber].z));
                 deltaPos = new BABYLON.Vector3(endPos.x - startPos.x, endPos.y - startPos.y, endPos.z - startPos.z);           
@@ -76,17 +80,18 @@ window.addEventListener('DOMContentLoaded', function(){
            "Z:" + ending.position.z + "<br>" +
            "Speed:" + commandType[instructionNumber].f + "<br>" + 
            "Line:" + instructionNumber + "<br>";
-           if(Math.round(ending.position.x*100)/100 >= endPos.x && Math.round(ending.position.y*100)/100 >= endPos.y && Math.round(ending.position.z*100)/100 >= endPos.z) {      
+           //console.log("Delta", deltaPos);
+           if(toRound(deltaPos.y) > 0 && Math.round(ending.position.x*100)/100 >= endPos.x && Math.round(ending.position.y*100)/100 >= endPos.y && Math.round(ending.position.z*100)/100 >= endPos.z) {      
                start = 1;
                startPos = new BABYLON.Vector3.Zero;
                endPos = startPos;
                deltaPos = endPos;
                //ending.position = new BABYLON.Vector3(commandType[instructionNumber].x, commandType[instructionNumber].y, commandType[instructionNumber].z);
                instructionNumber++;
-               console.log("Końcowa pozycja:",ending.position);
+               //console.log("Końcowa pozycja:",ending.position);
                console.log(instructionNumber);
            }
-           else if(deltaPos.x <= 0 && deltaPos.y <= 0 && deltaPos.z <= 0 && Math.round(ending.position.x*100)/100 <= endPos.x && Math.round(ending.position.y*100)/100 <= endPos.y && Math.round(ending.position.z*100)/100 <= endPos.z) {      
+           else if(toRound(deltaPos.x) <= 0 && toRound(deltaPos.y) <= 0 && toRound(deltaPos.z) <= 0 && Math.round(ending.position.x*100)/100 <= endPos.x && Math.round(ending.position.y*100)/100 <= endPos.y && Math.round(ending.position.z*100)/100 <= endPos.z) {      
                start = 1;
                startPos = new BABYLON.Vector3.Zero;
                endPos = startPos;
@@ -106,7 +111,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 if(commandType[instructionNumber].z == "0") commandType[instructionNumber].z = Math.round(100*ending.position.z)/100;
                 if(commandType[instructionNumber].f == "0") commandType[instructionNumber].f = 750;
                 if(commandType[instructionNumber].f == "0" && commandType[instructionNumber].name == "G0") commandType[instructionNumber].f = 1500;
-                console.log(commandType[instructionNumber]);
+                //console.log(commandType[instructionNumber]);
                 startPos = ending.position;
                 endPos = new BABYLON.Vector3(commandType[instructionNumber].x, commandType[instructionNumber].y, commandType[instructionNumber].z);
                 deltaPos = new BABYLON.Vector3(endPos.x - startPos.x, endPos.y - startPos.y, endPos.z - startPos.z);  
@@ -118,7 +123,27 @@ window.addEventListener('DOMContentLoaded', function(){
                 yPos = ending.position.y;
 
                 //if(parseFloat(circle.centerX) + parseFloat(circle.radius) * Math.cos(angle) == Math.round(ending.position.x*100)/100)
-                angle=Math.asin(yPos/(Math.sqrt(Math.pow(xPos,2) + Math.pow(yPos,2)))) + Math.PI;  
+                angle=0;
+                angle1 = Math.asin(yPos/(Math.sqrt(Math.pow(xPos,2) + Math.pow(yPos,2)))) + Math.PI;
+                console.log(angle1 - Math.PI);  
+
+                if(toRound(ending.position.x) == toRound(parseFloat(circle.centerX) + parseFloat(circle.radius) * Math.cos(angle1)) &&
+                toRound(ending.position.y) == toRound(parseFloat(circle.centerY) + parseFloat(circle.radius) * Math.sin(angle1)))
+                angle = Math.asin(yPos/(Math.sqrt(Math.pow(xPos,2) + Math.pow(yPos,2)))) + Math.PI; 
+
+                angle1 = Math.asin(yPos/(Math.sqrt(Math.pow(xPos,2) + Math.pow(yPos,2))));
+                console.log(toRound(ending.position.x), toRound(parseFloat(circle.centerX) + parseFloat(circle.radius) * Math.cos(angle1)),
+                toRound(ending.position.y), toRound(parseFloat(circle.centerY) + parseFloat(circle.radius) * Math.sin(angle1)));
+
+                if(toRound(ending.position.x) == Math.round(parseFloat(circle.centerX) + parseFloat(circle.radius) * Math.cos(angle1)) &&
+                toRound(ending.position.y) ==  Math.round(parseFloat(circle.centerY) + parseFloat(circle.radius) * Math.sin(angle1)))
+                angle = Math.asin(yPos/(Math.sqrt(Math.pow(xPos,2) + Math.pow(yPos,2))));
+
+
+
+
+
+                //console.log(angle);
                start=0;
            }           
     
@@ -143,14 +168,14 @@ window.addEventListener('DOMContentLoaded', function(){
                deltaPos = endPos;
                //ending.position = new BABYLON.Vector3(commandType[instructionNumber].x, commandType[instructionNumber].y, commandType[instructionNumber].z);
                instructionNumber++;
-               console.log("Końcowa pozycja: ",ending.position);
+              // console.log("Końcowa pozycja: ",ending.position);
                console.log(instructionNumber);
            }           
        }
 
 
        camera1.setTarget(ending.position);
-       if(cnt == 5){ //rysowanie linii za końcówką
+       if(cnt == 3){ //rysowanie linii za końcówką
          v1 = v2;
          v2 = new BABYLON.Vector3(ending.absolutePosition.x,ending.absolutePosition.y,ending.absolutePosition.z);
          lines = BABYLON.Mesh.CreateLines("lines", [v1,v2], scene);

@@ -12,11 +12,12 @@
 
     <div id="editor">
     G1 X5 Y5 Z5 F1000
-    G2 X5 Y7 I6 J6 F2000
-    G1 X5 Y10 Z5 F500
-    G2 X3 Y10 I4 J10 F2000
+    G2 X5 Y7 I6 J6 F4000
+    G1 X5 Y10 Z5 F1000
+    G2 X3 Y10 I4 J10 F4000
     G1 X3 Y7 F1000
-    G3 X3 Y5 I2 J6 F2000
+    G2 X3 Y5 I2 J6 F2000
+    G420
     </div>
 
     <div id="console">
@@ -24,6 +25,7 @@
     </div>
 
     <button type="button" onclick="start_stop()" id="start_button">Start/Stop</button>
+    <button type="button" onclick="parse()" id="start_button2">Kompiluj</button>
 
     <script src="src/ace.js" type="text/javascript" charset="utf-8"></script>
     <script>

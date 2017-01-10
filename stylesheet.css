@@ -34,3 +34,10 @@ html, body {
     left: 10px;
     bottom: 10px;
 }
+#start_button2{
+    position: absolute;
+    height: 20px;
+    width: 80px;
+    left: 100px;
+    bottom: 10px;
+}
