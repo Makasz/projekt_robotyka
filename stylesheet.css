@@ -8,13 +8,13 @@ html, body {
 
 #renderCanvas {
     position: absolute;
-    width   : 50%;
+    width   : 65%;
     height  : 100%;
     touch-action: none;
     right: 0;
 }
 #editor{
-  width: 50%;
+  width: 35%;
   height: 80%;
   position: absolute;
   top: 0;
@@ -22,8 +22,22 @@ html, body {
 }
 #console{
     height: 20%;
-    width: 50%;
+    width: 35%;
     position: absolute;
     left:0;
     bottom:0;
+}
+#start_button{
+    position: absolute;
+    height: 20px;
+    width: 80px;
+    left: 10px;
+    bottom: 10px;
+}
+#start_button2{
+    position: absolute;
+    height: 20px;
+    width: 80px;
+    left: 100px;
+    bottom: 10px;
 }

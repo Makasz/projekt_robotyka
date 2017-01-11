@@ -11,16 +11,15 @@
     <canvas id="renderCanvas"></canvas>
 
     <div id="editor">
-    G1 Z2 X2 Y2 F500
-    G1 X5 Y5 F1000 
-    G1 X1 Y1 Z1 F800 
-    G1 Z3 F1000 
-    G420
+
     </div>
 
     <div id="console">
         Console
     </div>
+
+    <button type="button" onclick="start_stop()" id="start_button">Start/Stop</button>
+    <button type="button" onclick="parse()" id="start_button2">Kompiluj</button>
 
     <script src="src/ace.js" type="text/javascript" charset="utf-8"></script>
     <script>
