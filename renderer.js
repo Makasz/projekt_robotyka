@@ -197,7 +197,7 @@ window.addEventListener('DOMContentLoaded', function(){
 
 
        camera1.setTarget(ending.position);
-       if(cnt == 5){ //rysowanie linii za końcówką
+       if(cnt == 2){ //rysowanie linii za końcówką
          v1 = v2;
          v2 = new BABYLON.Vector3(ending.absolutePosition.x,ending.absolutePosition.y,ending.absolutePosition.z);
          lines = BABYLON.Mesh.CreateLines("lines", [v1,v2], scene);
