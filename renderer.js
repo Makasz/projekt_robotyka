@@ -108,7 +108,8 @@ window.addEventListener('DOMContentLoaded', function(){
         //    }
 
        }
-
+       if(commandType[instructionNumber].name != "G2" && commandType[instructionNumber].name != "G3" && commandType[instructionNumber].name != "G1" && commandType[instructionNumber].name != "G0") instructionNumber++;
+       
        if(commandType[instructionNumber].name == "G2" || commandType[instructionNumber].name == "G3") {
            
            if(start == 1) {
