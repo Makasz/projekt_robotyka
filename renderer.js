@@ -1,10 +1,10 @@
 window.addEventListener('DOMContentLoaded', function(){
    var canvas = document.getElementById('renderCanvas');
    var engine = new BABYLON.Engine(canvas, true);
-   var circle, angle=0, sphere1, ground, cone1,chwytak,endflag=1,xPos,yPos, ending,lines,v1,v2,camera1,cnt = 0,x_axis,y_axis,z_axis,start=1,instructionNumber=1, startPos, endPos, deltaPos, end=0;
+   var circle, angle=0, sphere1, ground, cone1,chwytak,endflag=1,xPos,yPos, ending,lines,v1,v2,camera1,cnt = 0,x_axis,y_axis,z_axis,start=1,instructionNumber=0, startPos, endPos, deltaPos, end=0;
    var createScene = function(){
        var scene = new BABYLON.Scene(engine);
-       camera1 = new BABYLON.ArcRotateCamera("camera1", 1, 0.8, 10, new BABYLON.Vector3(0, 0, 0), scene);
+       camera1 = new BABYLON.ArcRotateCamera("camera1", 1, 0.8, 10, new BABYLON.Vector3(3, 3, 3), scene);
        camera1.setTarget(BABYLON.Vector3.Zero());
        camera1.attachControl(canvas, false);
        var light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0,1,0), scene);
@@ -34,7 +34,8 @@ window.addEventListener('DOMContentLoaded', function(){
        }
 
        if(run==1){
-
+           if(typeof commandType[instructionNumber] !== "undefined"){
+               //console.log(typeof commandType[instructionNumber]);
        if(commandType[instructionNumber].name == "G420");
 
        if(commandType[instructionNumber].name == "G1" || commandType[instructionNumber].name == "G0") {
@@ -108,8 +109,9 @@ window.addEventListener('DOMContentLoaded', function(){
         //    }
 
        }
+       if(typeof commandType[instructionNumber] !== "undefined")
        if(commandType[instructionNumber].name != "G2" && commandType[instructionNumber].name != "G3" && commandType[instructionNumber].name != "G1" && commandType[instructionNumber].name != "G0") instructionNumber++;
-       
+       if(typeof commandType[instructionNumber] !== "undefined")
        if(commandType[instructionNumber].name == "G2" || commandType[instructionNumber].name == "G3") {
            
            if(start == 1) {
@@ -196,14 +198,14 @@ window.addEventListener('DOMContentLoaded', function(){
        }
 
 
-       camera1.setTarget(ending.position);
-       if(cnt == 2){ //rysowanie linii za końcówką
+       
+       if(cnt == 5){ //rysowanie linii za końcówką
          v1 = v2;
          v2 = new BABYLON.Vector3(ending.absolutePosition.x,ending.absolutePosition.y,ending.absolutePosition.z);
          lines = BABYLON.Mesh.CreateLines("lines", [v1,v2], scene);
          cnt = 0;      
        }
-       cnt++;}
+       cnt++;} else instructionNumber++};
    });
    window.addEventListener('resize', function(){
        engine.resize();
