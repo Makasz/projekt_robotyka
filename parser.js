@@ -17,16 +17,29 @@ function checkSpaceFrom(array=[], character, places) { //Wycina ze stringa array
     var strVal="";
     for(var i=0;i<places;i++){
         if(typeof array[array.search(character)+i] !== "undefined"){
-            if(array[array.search(character)+i] == ";" || array[array.search(character)+i] == " ") return strVal.replace(/[^\d.-]/g, '');           
+            if(array[array.search(character)+i] == ";" || array[array.search(character)+i] == " ") return strVal.replace(/[^\d.-]/g, '');
             strVal += checkSpace(array[array.search(character)+i]);
         }
     };
-    return strVal.replace(/[^\d.-]/g, '');         
+    return strVal.replace(/[^\d.-]/g, '');
 }
 
 function checkSpace(character) { //Sprawdza czy znak to spacja
     if(character==" ") return "";
     return character;
+}
+
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
 }
 
 function getCommandType(element, index, array) {
@@ -43,7 +56,35 @@ function getCommandType(element, index, array) {
     if(element.search("J") != -1) commandType[index].j = checkSpaceFrom(element,"J",100);
 
     //console.log(commandType[index]);
-    
+
+}
+function save_file(){
+  console.log("Saving file");
+  parse();
+  var textToSave = (editor.getValue());
+  download("test.txt",textToSave);
+
+}
+
+function readSingleFile(e) {
+  var file = e.target.files[0];
+  if (!file) {
+    return;
+  }
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    var contents = e.target.result;
+    editor.setValue(contents);
+  };
+  reader.readAsText(file);
+}
+
+document.getElementById('file-input').addEventListener('change', readSingleFile, false);
+
+function load_file(){
+  console.log("Loading file");
+
+
 }
 
 
@@ -54,10 +95,10 @@ function parse(){
        localStorage['editorText'] = editorRawText;
         var editorLinesText = editorRawText.split('\n'); //Dzieli na linie do tablicy
        editorLinesText.forEach(getCommandType);
+       console.log(commandType);
 }
 
    function start_stop(){
-
        if(run==0) run = 1;
        else run = 0;
        //console.log(run);

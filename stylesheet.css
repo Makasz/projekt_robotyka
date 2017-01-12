@@ -13,6 +13,10 @@ html, body {
     touch-action: none;
     right: 0;
 }
+form * {
+  display: block;
+  margin: 10px;
+}
 #editor{
   width: 35%;
   height: 80%;
@@ -39,5 +43,19 @@ html, body {
     height: 20px;
     width: 80px;
     left: 100px;
+    bottom: 10px;
+}
+#start_button3{
+    position: absolute;
+    height: 20px;
+    width: 80px;
+    left: 190px;
+    bottom: 10px;
+}
+#file-input{
+    position: absolute;
+    height: 20px;
+    width: 90px;
+    left: 280px;
     bottom: 10px;
 }
