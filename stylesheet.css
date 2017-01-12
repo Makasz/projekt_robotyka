@@ -59,3 +59,17 @@ form * {
     left: 280px;
     bottom: 10px;
 }
+#camera1{
+    position: absolute;
+    height: 20px;
+    width: 80px;
+    left: 400px;
+    bottom: 10px;
+}
+#camera2{
+    position: absolute;
+    height: 20px;
+    width: 80px;
+    left: 490px;
+    bottom: 10px;
+}

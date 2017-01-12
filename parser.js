@@ -1,6 +1,7 @@
 var editor = ace.edit("editor");
 var commandType=[];
 var run=0;
+var compiled = false;
 commandType[1] = {name: ""};
 
 
@@ -96,10 +97,16 @@ function parse(){
         var editorLinesText = editorRawText.split('\n'); //Dzieli na linie do tablicy
        editorLinesText.forEach(getCommandType);
        console.log(commandType);
+       compiled = true;
 }
 
    function start_stop(){
-       if(run==0) run = 1;
-       else run = 0;
+       if(run==0 && compiled) {
+           run = 1;
+        }
+       else {
+           if(!compiled) alert("Przed startem skompiluj kod");
+           run = 0
+        };
        //console.log(run);
    }

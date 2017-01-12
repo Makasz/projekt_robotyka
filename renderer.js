@@ -1,3 +1,4 @@
+var cam;
 window.addEventListener('DOMContentLoaded', function(){
    var canvas = document.getElementById('renderCanvas');
    var engine = new BABYLON.Engine(canvas, true);
@@ -34,6 +35,8 @@ window.addEventListener('DOMContentLoaded', function(){
        }
 
        if(run==1){
+                  if(cam == 0) camera1.setTarget(ending.position);
+                    if(cam == 1) camera1.setTarget(BABYLON.Vector3.Zero());
            if(typeof commandType[instructionNumber] !== "undefined"){
                //console.log(typeof commandType[instructionNumber]);
        if(commandType[instructionNumber].name == "G420");
@@ -198,7 +201,8 @@ window.addEventListener('DOMContentLoaded', function(){
        }
 
 
-       
+
+       console.log(cam);
        if(cnt ==2){ //rysowanie linii za końcówką
          v1 = v2;
          v2 = new BABYLON.Vector3(ending.absolutePosition.x,ending.absolutePosition.y,ending.absolutePosition.z);
@@ -206,8 +210,18 @@ window.addEventListener('DOMContentLoaded', function(){
          cnt = 0;      
        }
        cnt++;} else instructionNumber++};
+       
    });
    window.addEventListener('resize', function(){
        engine.resize();
    });
 });
+
+function set_cam1(){
+    cam=0;
+    console.log("cam0"); 
+}
+function set_cam2(){
+    cam=1;
+    console.log("cam1");    
+}
